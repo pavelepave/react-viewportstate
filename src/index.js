@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from "prop-types"
 
+import bebounce from './debounce';
+
 /**
  * Default breakpoint
  * @type {Number}
@@ -30,13 +32,13 @@ export default (Child) => {
 			/**
 			 * Update window info on resize
 			 */
-			function onWindowResize() {
+			const onWindowResize = debounce(() => {
 				const docWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 				const docHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 				const device = window.innerWidth > props.breakpoint ? 'desktop' : 'mobile'
 				
 				setScreenState({device, docWidth, docHeight});
-			}
+			});
 			
 			onWindowResize();
 			window.addEventListener('resize', onWindowResize);
